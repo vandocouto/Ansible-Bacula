@@ -12,10 +12,10 @@ $ git clone https://github.com/vandocouto/Ansible-Bacula.git
 Step 2 - Accessing the project directory
 <pre>
 $ cd Ansible-Bacula
-
-TERRAFORM
-
 </pre>
+
+TERRAFORM 
+
 Step 3 - Configuring variables according to your sizing
 <pre>
 $ vim terraform/default/variables.tf
