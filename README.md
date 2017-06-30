@@ -1,4 +1,4 @@
-
+![Alt text](img/bacula.png?raw=true "Ansible Bacula")
 Step 1 - Project clone 
 <pre>
 $ git clone https://github.com/vandocouto/Ansible-Bacula.git
@@ -28,10 +28,10 @@ $ ./deploy.sh default apply
 <pre>
 Outputs:
 
-##### Endpoint Bucket = storagebaculasd
-##### Endpoint MariaDB = bacula.crje9bunlidu.us-east-1.rds.amazonaws.com:3306
-##### Private IP = 10.0.0.191
-##### Public Elastic IP = 34.230.96.230
+ Endpoint Bucket = storagebaculasd
+ Endpoint MariaDB = bacula.crje9bunlidu.us-east-1.rds.amazonaws.com:3306
+ Private IP = 10.0.0.191
+ Public Elastic IP = 34.230.96.230
 
 </pre>
 
