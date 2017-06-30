@@ -49,12 +49,12 @@ ANSIBLE
 Step 1 - Configuring the hosts file, according to the output of the terraform output
 <pre>
 [bacula]
-34.225.145.56
+34.230.96.230
 
 [all:vars]
 ansible_ssh_user=ubuntu
 ansible_ssh_private_key_file=../chave/Blog-Estudo.pem
-privateip=10.0.0.103
+privateip=10.0.0.191
 
 # MariaDB
 useradmin=root
