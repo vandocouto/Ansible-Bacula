@@ -22,14 +22,14 @@ Step 5 - Terraform apply (Build project)
 ./deploy.sh default apply
 </pre>
 
-####OUTPUT Terraform
+#### OUTPUT Terraform
 <pre>
 Outputs:
 
-Endpoint Bucket = storagebaculasd
-Endpoint MariaDB = bacula.crje9bunlidu.us-east-1.rds.amazonaws.com:3306
-Private IP = 10.0.0.191
-Public Elastic IP = 34.230.96.230
+##### Endpoint Bucket = storagebaculasd
+##### Endpoint MariaDB = bacula.crje9bunlidu.us-east-1.rds.amazonaws.com:3306
+##### Private IP = 10.0.0.191
+##### Public Elastic IP = 34.230.96.230
 
 </pre>
 
