@@ -1,4 +1,5 @@
-![Alt text](img/bacula.png?raw=true "Ansible Bacula")
+![Alt text](img/bacula.png?raw=true "Ansible Bacula") 
+<br>
 Step 1 - Project clone 
 <pre>
 $ git clone https://github.com/vandocouto/Ansible-Bacula.git
