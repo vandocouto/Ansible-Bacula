@@ -1,5 +1,5 @@
 ### Creating Bacula Server 7.4.7 - Infrastructure as Code
-
+<br>
 
 ![Alt text](img/bacula.png?raw=true "Ansible Bacula")
 
