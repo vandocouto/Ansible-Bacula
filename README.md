@@ -1,6 +1,6 @@
-<center>
+<hr>
 ![Alt text](img/bacula.png?raw=true "Ansible Bacula") 
-</center>
+<hr>
 <br>
 Step 1 - Project clone 
 <pre>
