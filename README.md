@@ -46,7 +46,7 @@ Outputs:
 
 ANSIBLE
 
-Step 1 - Configuring the hosts file, according to the output of the terraform output
+Step 1 - Configuring the hosts file in according to the output of the terraform output
 <pre>
 [bacula]
 34.230.96.230
