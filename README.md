@@ -1,25 +1,27 @@
 
 Step 1 - Project clone 
 <pre>
-git clone https://github.com/vandocouto/Ansible-Bacula.git
+$ git clone https://github.com/vandocouto/Ansible-Bacula.git
 </pre>
-
 Step 2 - Accessing the project directory
 <pre>
-cd Ansible-Bacula
+$ cd Ansible-Bacula
 </pre>
-
 Step 3 - Configuring variables according to your sizing
 <pre>
 $ vim terraform/default/variables.tf
 </pre>
-Step 4 - Terraform plan
+Step 5 - Accessing directory terrform
 <pre>
-./deploy.sh default plan
+$ cd terraform
 </pre>
-Step 5 - Terraform apply (Build project)
+Step 5 - Terraform plan
 <pre>
-./deploy.sh default apply
+$ ./deploy.sh default plan
+</pre>
+Step 6 - Terraform apply (Build project)
+<pre>
+$ ./deploy.sh default apply
 </pre>
 
 #### OUTPUT Terraform
@@ -33,6 +35,9 @@ Outputs:
 
 </pre>
 
+ANSIBLE
+
+Step 1 - Configuring the hosts file, according to the output of the terraform output
 <pre>
 [bacula]
 34.225.145.56
@@ -62,7 +67,8 @@ accesskey=
 keypass=
 </pre>
 
+Step 2 - Running playbook
 <pre>
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts ./tasks/main.yml 
+$ ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts ./tasks/main.yml 
 </pre>
 
