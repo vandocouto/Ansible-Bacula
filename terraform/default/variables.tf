@@ -121,6 +121,7 @@ variable "backup_retentiion" {
 
 // S3
 variable "bucket" {
-	default = "storagebaculasd"
+	description = "name bucket"
+	default = ""
 }
 
