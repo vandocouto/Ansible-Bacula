@@ -1,0 +1,116 @@
+---
+- name: "Bacula | set timezone to America/Sao_Paulo"
+  timezone:
+   name: America/Sao_Paulo
+
+- name: "Bacula | apt-get upgrade"
+  apt:
+    upgrade: dist
+
+- name: "Bacula | apt-get update"
+  apt:
+    update_cache: yes
+
+- name: "Bacula | apt-get install"
+  apt: name={{item}} state=present
+  with_items:
+   - build-essential
+   - wget
+   - make
+   - gcc
+   - g++
+   - libreadline-dev
+   - libmysql++-dev
+   - libacl1
+   - libacl1-dev
+   - s3fs
+   - mariadb-client
+   - python-mysqldb
+   - libreadline6-dev
+   - zlib1g-dev
+   - liblzo2-dev
+   - mt-st
+   - mtx
+   - postfix
+   - libacl1-dev
+   - libssl-dev 
+
+- name: "Bacula | download"
+  get_url:
+    url: "{{linkbacula}}"
+    dest: /opt/bacula.tar.gz
+
+- name: "Bacula | untar"
+  unarchive:
+   copy: no
+   src: /opt/bacula.tar.gz
+   dest: /opt
+
+- name: "Bacula | install"
+  command: chdir=/opt/{{dirbacula}} {{item}}
+  with_items:
+   - ./configure --with-mysql --with-readline=/usr/include/readline --disable-conio --bindir=/usr/bin --sbindir=/usr/sbin --with-scriptdir=/usr/libexec/bacula --with-working-dir=/var/spool/bacula
+   - make -j8
+   - make install
+   - make install-autostart
+  register: compile
+
+#- debug: var=compile
+
+- name: "Bacula | Configure /root/.my.cnf"
+  template:
+   src: '../templates/security.cnf.j2'
+   dest: '/root/.my.cnf'
+   owner: root
+   mode: 0600
+
+- name: "Bacula | Permission"
+  mysql_user:
+   name: "bacula"
+   host: "{{item}}"
+   password: "{{bdpassuser}}"
+   priv: "bacula.*:ALL"
+   login_host: "{{bdendpoint}}"
+  with_items:
+    - "{{ privateip }}"
+  ignore_errors: yes
+
+- name: "Bacula | install"
+  command: chdir=/usr/libexec/bacula {{item}}
+  with_items:
+   - ./make_mysql_tables
+
+- name: "Bacula | /etc/hosts"
+  lineinfile:
+   dest: /etc/hosts
+   line: "{{privateip}} {{server_name}} {{server_name}}-sd {{server_name}}-dir {{server_name}}-fd {{server_name}}-mon"
+   insertafter: 127.0.0.1 localhost
+   state: present
+   create: yes
+   backup: yes
+
+- name: "Bacula | Configure /etc/passwd-s3fs"
+  template:
+   src: '../templates/passwd-s3fs.j2'
+   dest: '/etc/passwd-s3fs'
+   owner: "root"
+   group: "root"
+   mode: 0640
+
+- name: "Bacula | Create Directory"
+  file: path={{item}} state=directory mode=0755
+  with_items:
+   - /mnt/S3
+  ignore_errors: yes
+
+- name: "Bacula | Mount S3 fstab"
+  mount:
+   src: s3fs#{{bucket}}
+   name: /mnt/S3
+   fstype: fuse
+   opts: "allow_other,use_cache=/cache"
+   state: mounted
+
+- name: "Bacula | Mount S3"
+  command: "/usr/bin/s3fs {{bucket}} /mnt/S3/"
+  ignore_errors: yes

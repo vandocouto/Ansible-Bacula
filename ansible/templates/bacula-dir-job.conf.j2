@@ -1,0 +1,31 @@
+# Job Restore
+Job {
+        Name                = "RestoreFiles"
+        Type                = Restore
+        Client              = {{server_name}}-fd
+        Storage             = File
+        FileSet             ="Default"
+        Pool                = Diario
+        Messages            = Standard
+        Where               = /tmp/bacula-restores
+}
+
+# Job Backup
+Job {
+    Name                    = "{{server_name}}"
+    JobDefs                 = "DefaultJob"
+}
+
+# Job Catalog
+Job {
+    Name                    = "BackupCatalog"
+    JobDefs                 = "DefaultJob"
+    Level                   = Full
+    FileSet                 ="Default"
+    Schedule                = "WeeklyCycleAfterBackup"
+    RunBeforeJob            = "/usr/libexec/bacula/make_catalog_backup.pl MyCatalog"
+    RunAfterJob             = "/usr/libexec/bacula/delete_catalog_backup"
+    Write Bootstrap         = "/var/spool/bacula/%n.bsr"
+    Priority                = 100
+}
+

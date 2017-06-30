@@ -1,0 +1,14 @@
+JobDefs {
+        Name            = "DefaultJob"
+        Type            = Backup
+        Level           = Incremental
+        Client          = {{server_name}}-fd
+        FileSet         = "Default"
+        Schedule        = "WeeklyCycle"
+        Storage         = File
+        Messages        = Standard
+        Pool            = File
+        SpoolAttributes = yes
+        Priority        = 10
+        Write Bootstrap = "/var/spool/bacula/%c.bsr"
+}

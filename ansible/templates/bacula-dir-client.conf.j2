@@ -1,0 +1,12 @@
+# Client (File Services) to backup
+
+Client {
+    Name              = {{server_name}}-fd
+    Address           = {{privateip}}
+    FDPort            = 9102
+    Catalog           = MyCatalog
+    Password          = "{{baculapass}}"
+    File Retention    = 60 days
+    Job Retention     = 6 months
+    AutoPrune         = yes
+}

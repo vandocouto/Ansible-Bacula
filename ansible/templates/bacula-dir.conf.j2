@@ -1,0 +1,84 @@
+# Director
+
+Director {
+        Name                            = {{server_name}}-dir
+        DIRport                         = 9101
+        QueryFile                       = "/usr/libexec/bacula/query.sql"
+        WorkingDirectory                = "/var/spool/bacula"
+        PidDirectory                    = "/var/run"
+        Maximum Concurrent Jobs         = 20
+        Password                        = "{{baculapass}}"
+        Messages                        = Daemon
+}
+
+# JobDefs
+@/etc/bacula/include/bacula-dir-jobdefs.conf
+
+# FileSet
+@/etc/bacula/include/bacula-dir-fileset.conf
+
+# Client
+@/etc/bacula/include/bacula-dir-client.conf
+
+# job
+@/etc/bacula/include/bacula-dir-job.conf
+
+# Pool
+@/etc/bacula/include/bacula-dir-pool.conf
+
+# Agenda
+@/etc/bacula/include/bacula-dir-schedule.conf
+
+# Storage
+Storage {
+  	Name 			= File
+  	Address 		= {{privateip}}
+  	SDPort 			= 9103
+  	Password 		= "{{baculapass}}"
+  	Device 			= Format_archive
+  	Media Type 		= File
+  	Maximum Concurrent Jobs = 10        
+}
+
+# BD - RDS
+Catalog {
+  	Name 			= MyCatalog
+  	dbname 			= "bacula"
+	dbuser 			= "bacula"
+	dbpassword 		= "{{bdpassuser}}"
+	dbaddress		= "{{bdendpoint}}"
+}
+
+# Email - Messages
+Messages {
+  	Name 			    = Standard
+  	mailcommand 		= "/usr/sbin/bsmtp -h localhost -f \"\(Bacula\) \<%r\>\" -s \"Bacula: %t %e of %c %l\" %r"
+  	operatorcommand 	= "/usr/sbin/bsmtp -h localhost -f \"\(Bacula\) \<%r\>\" -s \"Bacula: Intervention needed for %j\" %r"
+  	mail 			    = root@localhost = all, !skipped
+  	operator 		    = root@localhost = mount
+  	console 		    = all, !skipped, !saved
+  	append 			    = "/opt/bacula/log/bacula.log" = all, !skipped
+  	catalog 		    = all
+}
+
+
+Messages {
+  	Name 			    = Daemon
+  	mailcommand 		= "/usr/sbin/bsmtp -h localhost -f \"\(Bacula\) \<%r\>\" -s \"Bacula daemon message\" %r"
+  	mail 			    = root@localhost = all, !skipped
+  	console 	    	= all, !skipped, !saved
+  	append 			    = "/opt/bacula/log/bacula.log" = all, !skipped
+}
+
+# Scratch pool definition
+Pool 	{
+  	Name 			    = Scratch
+  	Pool Type 		    = Backup
+}
+
+# Restricted console used by tray-monitor to get the status of the director
+Console {
+  	Name 		        = {{server_name}}
+  	Password 	        = "{{baculapass}}"
+  	CommandACL 	        = status, .status
+}

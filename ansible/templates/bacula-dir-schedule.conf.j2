@@ -1,0 +1,20 @@
+#  and incremental backups other days
+Schedule {
+    Name        =  "WeeklyCycle"
+    Run         = Full 1st sun at 23:05
+    Run         = Differential 2nd-5th sun at 22:00
+    Run         = Incremental mon-sat at 22:00
+}
+
+# This schedule does the catalog. It starts after the WeeklyCycle
+Schedule {
+        Name    = "WeeklyCycleAfterBackup"
+        Run     = Full sun-sat at 23:10
+}
+
+# Agenda tutoriaisgnulinux.com
+Schedule {
+        Name    = "Agenda_gfs"
+        Run     = Incremental               Pool=Diario             monday-saturday         at 00:00,06:00,18:00
+        Run     = Full                      Pool=Mensal             1st saturday            at 00:00
+}

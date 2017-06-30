@@ -1,0 +1,49 @@
+# Default pool definition
+Pool {
+    Name                                = Default
+    Pool Type                           = Backup
+    Recycle                             = yes               # Bacula can automatically recycle Volumes
+    AutoPrune                           = yes               # Prune expired volumes
+    Volume Retention                    = 365 days          # one year
+    Maximum Volume Bytes                = 50G               # Limit Volume size to something reasonable
+    Maximum Volumes                     = 100               # Limit number of Volumes in Pool
+}
+
+# File Pool definition
+Pool {
+    Name                                = File
+    Pool Type                           = Backup
+    Recycle                             = yes               # Bacula can automatically recycle Volumes
+    AutoPrune                           = yes               # Prune expired volumes
+    Volume Retention                    = 90 days           # one year
+    Maximum Volume Bytes                = 100G              # Limit Volume size to something reasonable
+    Maximum Volumes                     = 500               # Limit number of Volumes in Pool
+    Label Format                           = "Vol-"         # Auto label
+}
+
+Pool {
+        Name                            = Diario
+        Pool Type                       = Backup
+        Recycle                         = yes
+        AutoPrune                       = yes
+        Volume Use Duration             = 24 hours
+        Volume Retention                = 60 days
+        Maximum Volume Bytes            = 100T
+        Maximum Volumes                 = 500
+        Label Format                    ="diario-${NumVols}"
+}
+
+Pool {
+        Name                            = Mensal
+        Pool Type                       = Backup
+        Recycle                         = yes
+        AutoPrune                       = yes
+        Volume Use Duration             = 15 days
+        Volume Retention                = 70 days
+        Maximum Volume Bytes            = 200T
+        Maximum Volumes                 = 100
+        Label Format                    ="mensal-${NumVols}"
+}
+
+
+

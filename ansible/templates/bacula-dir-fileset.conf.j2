@@ -1,0 +1,42 @@
+# This is the backup of the catalog
+
+FileSet {
+        Name    = "Catalog"
+        Include {
+                Options {
+                signature = MD5
+                }
+                File    = "/var/spool/bacula/bacula.sql"
+        }
+}
+
+# Default
+
+FileSet {
+    Name = "Default"
+    Include {
+        Options {
+            signature = MD5
+            Compression = GZIP2
+        }
+        File = /etc
+        File = /opt
+        File = /mnt
+        File = /usr
+
+    }
+
+    Exclude {
+        File = /var/spool/bacula
+        File = /tmp
+        File = /proc
+        File = /tmp
+        File = /sys
+        File = /.journal
+        File = /.fsck
+        File = /mnt/S3
+    }
+}
+
+
+

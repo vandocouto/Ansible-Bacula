@@ -1,0 +1,41 @@
+#
+# Default  Bacula File Daemon Configuration file
+#
+#  For Bacula release 7.4.7 (16 March 2017) -- ubuntu 16.04
+#
+# There is not much to change here except perhaps the
+# File daemon Name to
+#
+#
+# Copyright (C) 2000-2015 Kern Sibbald
+# License: BSD 2-Clause; see file LICENSE-FOSS
+#
+
+#
+# List Directors who are permitted to contact this File daemon
+#
+Director {
+    Name      = {{server_name}}-dir
+    Password  = "{{baculapass}}"
+}
+
+Director {
+    Name        = {{server_name}}-mon
+    Password    = "{{baculapass}}"
+    Monitor     = yes
+}
+
+FileDaemon {
+    Name                    = {{server_name}}-fd
+    FDport                  = 9102
+    WorkingDirectory        = /var/spool/bacula
+    Pid Directory           = /var/run
+    Maximum Concurrent Jobs = 20
+    Plugin Directory        = /usr/lib64
+}
+
+
+Messages {
+    Name                    = Standard
+    director                = {{server_name}}-dir = all, !skipped, !restored
+}

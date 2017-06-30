@@ -1,0 +1,54 @@
+#
+# Default Bacula Storage Daemon Configuration file
+#
+#  For Bacula release 7.4.7 (16 March 2017) -- ubuntu 16.04
+#
+# You may need to change the name of your tape drive
+#   on the "Archive Device" directive in the Device
+#   resource.  If you change the Name and/or the
+#   "Media Type" in the Device resource, please ensure
+#   that dird.conf has corresponding changes.
+#
+#
+# Copyright (C) 2000-2015 Kern Sibbald
+# License: BSD 2-Clause; see file LICENSE-FOSS
+#
+
+Storage {
+    Name                    = {{server_name}}-sd
+    SDPort                  = 9103
+    WorkingDirectory        = "/var/spool/bacula"
+    Pid Directory           = "/var/run"
+    Maximum Concurrent Jobs = 30
+}
+
+Director {
+    Name                    = {{server_name}}-dir
+    Password                = "{{baculapass}}"
+}
+
+#
+# Restricted Director, used by tray-monitor to get the
+#   status of the storage daemon
+#
+Director {
+    Name                    = {{server_name}}-mon
+    Password                = "{{baculapass}}"
+    Monitor                 = yes
+}
+
+Device {
+        Name                    = Format_archive
+        Media Type              = File
+        Archive Device          = /mnt/S3
+        LabelMedia              = yes;
+        Random Access           = Yes;
+        AutomaticMount          = yes;
+        RemovableMedia          = no;
+        AlwaysOpen              = no;
+}
+
+Messages {
+        Name                    = Standard
+        director                = {{server_name}}-dir = all
+}

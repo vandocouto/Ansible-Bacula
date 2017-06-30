@@ -1,0 +1,34 @@
+---
+- name: "Bacula | create director include"
+  file:
+   path: /etc/bacula/include
+   state: directory
+   mode: 0755
+
+- name: "Bacula | file config"
+  template:
+   src: ../templates/{{item.j2}}
+   dest: /etc/bacula/{{item.conf}}
+   backup: yes
+   mode: 0644
+  with_items:
+   - {conf: bacula-dir.conf, j2: bacula-dir.conf.j2}
+   - {conf: bacula-fd.conf, j2: bacula-fd.conf.j2}
+   - {conf: bacula-sd.conf, j2: bacula-sd.conf.j2}
+   - {conf: bconsole.conf, j2: bconsole.conf.j2}
+   - {conf: include/bacula-dir-client.conf, j2: bacula-dir-client.conf.j2}
+   - {conf: include/bacula-dir-fileset.conf, j2: bacula-dir-fileset.conf.j2}
+   - {conf: include/bacula-dir-job.conf, j2: bacula-dir-job.conf.j2}
+   - {conf: include/bacula-dir-jobdefs.conf, j2: bacula-dir-jobdefs.conf.j2}
+   - {conf: include/bacula-dir-pool.conf, j2: bacula-dir-pool.conf.j2}
+   - {conf: include/bacula-dir-schedule.conf, j2: bacula-dir-schedule.conf.j2}
+
+- name: "Bacula | START Service"
+  systemd: name={{item}} state=started
+  with_items:
+   - bacula-fd
+   - bacula-sd
+   - bacula-dir
+  ignore_errors: yes
+
+

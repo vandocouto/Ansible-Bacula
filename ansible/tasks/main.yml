@@ -1,0 +1,13 @@
+---
+# tasks file for ansible
+- name: "Hosts"
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - include: install.yml
+      tags: install
+
+    - include: configure.yml
+      tags: configure
