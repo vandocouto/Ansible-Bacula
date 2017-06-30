@@ -1,16 +1,28 @@
 
+Step 1 - Project clone 
 <pre>
-
+git clone https://github.com/vandocouto/Ansible-Bacula.git
 </pre>
 
+Step 2 - Accessing the project directory
+<pre>
+cd Ansible-Bacula
+</pre>
+
+Step 3 - Configuring variables according to your sizing
+<pre>
+$ vim terraform/default/variables.tf
+</pre>
+Step 4 - Terraform plan
 <pre>
 ./deploy.sh default plan
 </pre>
-
+Step 5 - Terraform apply (Build project)
 <pre>
 ./deploy.sh default apply
 </pre>
 
+####OUTPUT Terraform
 <pre>
 Outputs:
 
